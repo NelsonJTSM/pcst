@@ -69,8 +69,4 @@ public class OutputHandler {
     public Result getResult() {
         return result;
     }
-
-    public enum Result {
-        CORRECT, INCORRECT, SHORTINPUT, LONGINPUT;
-    }
 }

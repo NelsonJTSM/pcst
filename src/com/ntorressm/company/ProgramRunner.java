@@ -1,8 +1,6 @@
 package com.ntorressm.company;
 
 import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 public class ProgramRunner {
 
@@ -15,13 +13,18 @@ public class ProgramRunner {
     private ProcessBuilder processBuilder;
     private Process process;
 
-    public ProgramRunner(String[] args) throws Exception {
+    private long startTime;
+    private long endTime;
+
+    public ProgramRunner(String javaFileName) {
         // Initialize all necessary variables
         inputHandler = new InputHandler();
         outputHandler = new OutputHandler();
+        this.javaFileName = javaFileName;
+        javaFileDirectory = new File(".");
+    }
 
-        parseArgs(args);
-
+    public void start() throws Exception {
         startProcess();
 
         handleInput();
@@ -33,16 +36,6 @@ public class ProgramRunner {
         checkSolution();
     }
 
-    // TODO: Correctly parse arguments
-    /* Current only works for Main classname dir/to/class dir/to/input/filename dir/to/output/filename */
-    private void parseArgs(String[] args) {
-        javaFileName = args[0];
-        javaFileDirectory = new File(args[1]);
-        inputHandler.setFile(new File(args[2]));
-        outputHandler.setFile(new File(args[3]));
-    }
-
-    // TODO: Compile the .java file
     private void startProcess() throws Exception {
         processBuilder = new ProcessBuilder("java", javaFileName);
         processBuilder.directory(javaFileDirectory);
@@ -54,7 +47,9 @@ public class ProgramRunner {
     }
 
     private void handleInput() throws Exception {
+        startTime = System.currentTimeMillis();
         inputHandler.update();
+        endTime = System.currentTimeMillis();
     }
 
     private void handleOutput() throws Exception {
@@ -66,6 +61,8 @@ public class ProgramRunner {
     }
 
     private void checkSolution() {
+        System.out.printf("Solution took %.3fs\n", (endTime-startTime)/1000.0);
+
         switch (outputHandler.getResult()) {
             case CORRECT:
                 System.out.println("The output is correct");
@@ -85,4 +82,13 @@ public class ProgramRunner {
                     System.out.println("I don't know what you did, but you must have really messed up");
         }
     }
+
+    public void setDirectory(String directory) {
+        inputHandler.setFile(new File(directory + "/" +javaFileName + ".in"));
+        outputHandler.setFile(new File(directory + "/" +javaFileName + ".out"));
+    }
+}
+
+enum Result {
+    CORRECT, INCORRECT, SHORTINPUT, LONGINPUT;
 }

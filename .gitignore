@@ -28,3 +28,7 @@ hs_err_pid*
 src/com/ntorressm/company/code_test.java
 src/com/ntorressm/company/problem_tester.java
 
+# Removing IntelliJ files
+ProgrammingContestTester.iml
+/.idea/*
+

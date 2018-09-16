@@ -1,4 +1,4 @@
-# Programming Contest Solution Verifier
+# Programming Contest Solution Tester
 A program which tests programming competition solutions
 
 *As of 9/14/2018:*

@@ -15,6 +15,10 @@ public class OutputHandler {
     private String correctLine;
     private Result result;
 
+    public OutputHandler(File file) {
+        this.file = file;
+    }
+
     public void update() throws Exception {
         javaOutputReader = new BufferedReader(new InputStreamReader(stdout));
         outputFileReader = new BufferedReader(new FileReader(file));
@@ -44,10 +48,6 @@ public class OutputHandler {
         // Close readers
         outputFileReader.close();
         javaOutputReader.close();
-    }
-
-    public void setFile(File file) {
-        this.file = file;
     }
 
     public void setStdout(InputStream stdout) {

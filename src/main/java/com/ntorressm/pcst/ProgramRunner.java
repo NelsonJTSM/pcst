@@ -7,8 +7,9 @@ public class ProgramRunner {
     private InputHandler inputHandler;
     private OutputHandler outputHandler;
 
-    private String javaFileName;
-    private File javaFileDirectory;
+    private File classFile;
+    private File inputFile;
+    private File outputFile;
 
     private ProcessBuilder processBuilder;
     private Process process;
@@ -16,12 +17,13 @@ public class ProgramRunner {
     private long startTime;
     private long endTime;
 
-    public ProgramRunner(String javaFileName) {
-        // Initialize all necessary variables
-        inputHandler = new InputHandler();
-        outputHandler = new OutputHandler();
-        this.javaFileName = javaFileName;
-        javaFileDirectory = new File(".");
+    public ProgramRunner(File classFile, File inputFile, File outputFile) {
+        this.classFile = classFile;
+        this.inputFile = inputFile;
+        this.outputFile = outputFile;
+
+        inputHandler = new InputHandler(inputFile);
+        outputHandler = new OutputHandler(outputFile);
     }
 
     public void start() throws Exception {
@@ -37,8 +39,7 @@ public class ProgramRunner {
     }
 
     private void startProcess() throws Exception {
-        processBuilder = new ProcessBuilder("java", javaFileName);
-        processBuilder.directory(javaFileDirectory);
+        processBuilder = new ProcessBuilder("java", classFile.getPath().substring(0, classFile.getPath().length()-6));
         processBuilder.redirectErrorStream(true);
         process = processBuilder.start();
 
@@ -81,11 +82,6 @@ public class ProgramRunner {
                 default:
                     System.out.println("I don't know what you did, but you must have really messed up");
         }
-    }
-
-    public void setDirectory(String directory) {
-        inputHandler.setFile(new File(directory + "/" +javaFileName + ".in"));
-        outputHandler.setFile(new File(directory + "/" +javaFileName + ".out"));
     }
 }
 

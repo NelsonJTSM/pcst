@@ -1,5 +1,7 @@
 package com.ntorressm.pcst;
 
+import jdk.internal.util.xml.impl.Input;
+
 import java.io.*;
 
 public class InputHandler {
@@ -9,6 +11,10 @@ public class InputHandler {
 
     private BufferedReader inputFileReader;
     private BufferedWriter javaInputWriter;
+
+    public InputHandler(File file) {
+        this.file = file;
+    }
 
     public void update() throws Exception {
         inputFileReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
@@ -25,10 +31,6 @@ public class InputHandler {
         inputFileReader.close();
         javaInputWriter.flush();
         javaInputWriter.close();
-    }
-
-    public void setFile(File file) {
-        this.file = file;
     }
 
     public void setStdin(OutputStream stdin) {

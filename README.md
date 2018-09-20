@@ -9,6 +9,10 @@ The program can run a compiled java class, and given an input and the correct ou
 
 Download and compile it. All that's needed.
 
+## Example
+
+```java Main test.java /dir/to/file```
+
 ## Built With
 * [Maven](https://maven.apache.org/) - Dependency Management
 
